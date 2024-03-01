@@ -3,7 +3,7 @@ public:
     string maximumOddBinaryNumber(string s) {
 
         string ones, zeros;
-        int len = s.length();
+        short int len = s.length();
         bool oneFound = false;
 
         for (int i = 0; i < len; i++) 
