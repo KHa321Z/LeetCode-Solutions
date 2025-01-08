@@ -6,7 +6,7 @@ public:
 
         for (int i = 0; i < s.length(); i++)
             if (s[i] != '*')
-                stek.push_back(s[i]);
+                stek += s[i];
             else
                 stek.pop_back();
 
