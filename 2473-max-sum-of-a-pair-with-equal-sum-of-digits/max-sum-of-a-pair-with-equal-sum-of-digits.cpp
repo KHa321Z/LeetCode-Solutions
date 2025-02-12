@@ -16,13 +16,13 @@ public:
         unordered_map<int, int*> mep;
 
         for (int i = 0; i < nums.size(); i++) {
-            cout << (mep[digitSum(nums[i])] ? *mep[digitSum(nums[i])] : 0) << " ";
+            int index = digitSum(nums[i]);
 
-            if (!mep[digitSum(nums[i])])
-                mep[digitSum(nums[i])] = new int(i);
+            if (!mep[index])
+                mep[index] = new int(i);
             else
-                sum = max(sum, nums[*mep[digitSum(nums[i])]] + nums[i]), 
-                mep[digitSum(nums[i])] = (nums[i] > nums[*mep[digitSum(nums[i])]]) ? new int(i) : mep[digitSum(nums[i])];
+                sum = max(sum, nums[*mep[index]] + nums[i]), 
+                mep[index] = (nums[i] > nums[*mep[index]]) ? new int(i) : mep[index];
         }
 
         return sum;
