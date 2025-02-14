@@ -3,17 +3,16 @@ public:
     int lengthOfLongestSubstring(string s) {
         
         int maxLen = 0;
+        int left = 0;
+        unordered_map<char, int> mep;
 
-        for (int left = 0; left < s.length(); left++) {
+        for (int right = 0; right < s.length(); right++) {
 
-            int len = 0;
-            unordered_map<char, int> mep;
+            if ((mep.find(s[right]) != mep.end()) && (mep[s[right]] >= left))
+                left = mep[s[right]] + 1;
 
-            for (int right = left; ((right < s.length()) && (++mep[s[right]] < 2)); right++) 
-                len++;
-
-            cout << endl;
-            maxLen = max(maxLen, len);
+            maxLen = max(maxLen, right - left + 1);
+            mep[s[right]] = right;
 
         }
 
