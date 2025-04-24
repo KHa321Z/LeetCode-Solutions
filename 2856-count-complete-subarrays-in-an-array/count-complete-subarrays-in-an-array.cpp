@@ -2,25 +2,32 @@ class Solution {
 public:
     int countCompleteSubarrays(vector<int>& nums) {
         
-        unordered_set<int> unique;
+        int res = 0;
+        int n = nums.size();
+        unordered_map<int, int> cnt;
+        unordered_set<int> unique(nums.begin(), nums.end());
+        int uniqueCount = unique.size();
 
-        for (int num : nums)
-            unique.insert(num);
+        for (int left = 0, right = 0; left < n; left++) {
 
-        int count = 0;
-        int numOfUnique = unique.size();
+            if (left > 0) {
+                cnt[nums[left - 1]]--;
 
-        for (int i = 0; i < nums.size(); i++) {
-            unordered_set<int> newUnique;
-            for (int j = i; j < nums.size(); j++) {
-                newUnique.insert(nums[j]);
-
-                if (newUnique.size() == numOfUnique)
-                    count++;
+                if (cnt[nums[left - 1]] == 0)
+                    cnt.erase(nums[left - 1]);
             }
+
+            while (right < n && cnt.size() < uniqueCount) {
+                cnt[nums[right]]++;
+                right++;
+            }
+
+            if (cnt.size() == uniqueCount)
+                res += n - right + 1;
+
         }
 
-        return count;
+        return res;
 
     }
 };
