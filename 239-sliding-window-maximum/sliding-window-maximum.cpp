@@ -6,20 +6,27 @@ public:
         
         int n = nums.size();
         vector<int> res(n - k + 1);
-        priority_queue<pii> pq;
+        deque<pii> dq;
 
         int l = 0, r = 0;
 
-        for (; r < k - 1; r++)
-            pq.push({nums[r], r});
+        for (; r < k - 1; r++) {
+            while (!dq.empty() && dq.back().first < nums[r])
+                dq.pop_back();
 
-        for (; r < n; r++) {
-            pq.push({nums[r], r});
+            dq.push_back({nums[r], r});
+        }
 
-            while (pq.top().second < l)
-                pq.pop();
+        for (; r < n; r++, l++) {
+            while (!dq.empty() && dq.back().first < nums[r])
+                dq.pop_back();
 
-            res[l++] = pq.top().first;
+            dq.push_back({nums[r], r});
+
+            res[l] = dq.front().first;
+
+            if (dq.front().second == l)
+                dq.pop_front();
         }
 
         return res;
